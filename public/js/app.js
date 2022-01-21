@@ -1,20 +1,12 @@
-console.log('Client side javascript file is loaded!')
-
 function fetchWeatherData(location, callback){
 
-    fetch(`http://localhost:3000/weather?address=${location}`).then((response) => {
+    fetch(`/weather?address=${location}`).then((response) => {
         response.json().then((data) => {
-            console.log("IN FETCH: " + data);
             if(data.error)
             {
-                console.log(data.error);
                 return callback(data.error, undefined)
             }
             else{
-                console.log(data.address);
-                console.log(data.forecast);
-                console.log("RETURINING FORECAST");
-
                 return callback(undefined, {'forecast': data.forecast, 'address':data.address})
             }
         })
@@ -37,18 +29,13 @@ weatherForm.addEventListener('submit', (e) => {
 
     fetchWeatherData(location, (error, data)=>{
         if(error){
-            console.log("ERROR: ", error);
             messageOne.textContent = error;
         }
         else{
-            console.log("DATA: ", data);
             messageOne.textContent = data.address;
             messageTwo.textContent = data.forecast;
         }
 
     });
-
-    console.log("SUBMIT WORKING");
-    // console.log(weather);
 }
 )
